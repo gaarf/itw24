@@ -1,0 +1,27 @@
+---
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+---
+
+<auto-select>
+  <select class="select select-ghost" name={name}>
+    <slot />
+  </select>
+</auto-select>
+
+<script>
+  class AutoSelect extends HTMLElement {
+    constructor() {
+      super();
+      const select = this.querySelector("select");
+      select.addEventListener("change", (e) => {
+        select.form.submit();
+      });
+    }
+  }
+
+  customElements.define("auto-select", AutoSelect);
+</script>

@@ -1,0 +1,46 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import { unsplashApi, type Photo } from "../../unsplash";
+
+const {
+  data: { urls, description, alt_description, user, links },
+} = await unsplashApi<Photo>(`/photos/${Astro.params.id}`);
+const title = description ?? "Photo";
+---
+
+<!doctype html>
+<html lang="en" transition:animate="slide">
+  <head>
+    <BaseHead title={title} />
+  </head>
+  <body
+    class="flex justify-center items-center flex-wrap px-16 py-8 bg-base-300 min-h-dvh"
+  >
+    <div class="card max-w-[1080px] shadow-xl card-compact overflow-clip">
+      <div class="card-body bg-base-100 border-b">
+        <h2 class="card-title flex flex-col text-sm">
+          <span class="flex-1 text-center text-balance font-thin">
+            {title}
+          </span>
+          <span>
+            by <a href={user.links.html} class="link">{user.name}</a>
+          </span>
+        </h2>
+        <div class="card-actions absolute right-8 bottom-8">
+          <a href={links.download} target="_blank" class="btn btn-circle">
+            💾
+          </a>
+        </div>
+      </div>
+      <figure class="overflow-auto min-h-52 min-w-52">
+        <span class="loading loading-ring" />
+        <img src={urls.regular} alt={alt_description} />
+      </figure>
+    </div>
+
+    <a
+      class="btn btn-square btn-sm fixed top-3 left-3"
+      href="javascript:history.go(-1)">⬅️</a
+    >
+  </body>
+</html>

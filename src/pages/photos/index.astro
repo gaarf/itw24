@@ -1,0 +1,58 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import AutoSelect from "../../components/AutoSelect.astro";
+import PhotoGridReact from "../../components/Photos";
+
+const query = Astro.url.searchParams.get("query") ?? "";
+let order_by = Astro.url.searchParams.get("order_by") ?? "latest";
+if (!query) {
+  order_by = "latest";
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="Browse Photos" />
+  </head>
+  <body class="min-h-dvh flex flex-col flex-wrap">
+    <form class="w-full navbar bg-base-200">
+      <span class="navbar-start">
+        <label class="input input-bordered flex items-center gap-2">
+          <input
+            type="text"
+            class="grow"
+            name="query"
+            placeholder="Search"
+            value={query}
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            class="w-4 h-4 opacity-70"
+            ><path
+              fill-rule="evenodd"
+              d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+              clip-rule="evenodd"></path></svg
+          >
+        </label>
+      </span>
+      <span class="navbar-end">
+        <AutoSelect name="order_by">
+          <option selected={order_by !== "relevant"} value="latest">
+            Latest first
+          </option>
+          <option
+            disabled={!query}
+            selected={order_by === "relevant"}
+            value="relevant">Most relevant first</option
+          >
+        </AutoSelect>
+      </span>
+    </form>
+    <div class="p-4 flex-1 flex justify-center items-center">
+      <PhotoGridReact client:load search={Astro.url.search} />
+    </div>
+  </body>
+</html>
