@@ -1,6 +1,7 @@
 # ITW24
 
-<video src="https://github.com/gaarf/itw24/raw/main/public/recording.mov" controls></video>
+[recording.webm](https://github.com/gaarf/itw24/assets/205004/efecdd6f-ccf3-447b-8979-1c11a1cd622f)
+
 
 ## 🚀 Configuration
 
